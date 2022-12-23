@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block base %}
+
+
+<div class="container mt-0 text-center">
+    <div class="row">
+        <div class="col-4">
+            <div class="alert alert-light">
+                <h4>Week</h4>
+                <img src="{% static 'images\uparrow.png' %}" alt="" class="change-dates" value="increase-week"><span
+                    id="week-number"> {{context.3}} </span>
+                <img src="{% static 'images\downarrow.png' %}" alt="" class="change-dates" value="decrease-week">
+            </div>
+            <div>
+                <h6>Task Completed : </h6>
+                <p>{{context.0.ifdone}}</p>
+                <h6>Task Incompleted : </h6>
+                <p>{{context.0.notdone}}</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="alert alert-light ">
+                <h4>Month</h4>
+                <img src="{% static 'images\uparrow.png' %}" alt="" class="change-dates" value="increase-month"><span
+                    id="month-number"> {{context.3}} </span>
+                <img src="{% static 'images\downarrow.png' %}" alt="" class="change-dates" value="decrease-month">
+
+            </div>
+            <div>
+                <h6>Task Completed : </h6>
+                <p>{{context.1.ifdone}}</p>
+                <h6>Task Incompleted : </h6>
+                <p>{{context.1.notdone}}</p>
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="alert alert-light">
+                <h4>Year</h4>
+                <img src="{% static 'images\uparrow.png' %}" alt="" class="change-dates" value="increase-year"><span
+                    id="year-number"> {{context.3}} </span>
+                <img src="{% static 'images\downarrow.png' %}" alt="" class="change-dates" value="decrease-year">
+
+            </div>
+            <div>
+                <h6>Task Completed : </h6>
+                <p>{{context.2.ifdone}}</p>
+                <h6>Task Incompleted : </h6>
+                <p>{{context.2.notdone}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    week_str = document.getElementById('week-number')
+    month_str = document.getElementById('month-number')
+    year_str = document.getElementById('year-number')
+
+    let weekno = parseInt(week_str.innerHTML, 10)
+    let monthno = parseInt(week_str.innerHTML, 10)
+    let yearno = parseInt(week_str.innerHTML, 10)
+
+
+    let changing_buttons = Array.from(document.getElementsByClassName('change-dates'))
+    changing_buttons.forEach(element => {
+        element.addEventListener('click', () => {
+            value = element.getAttribute('value')
+            console.log(value)
+            if (value == 'increase-week') {
+                weekno = weekno + 1
+                week_str.innerHTML = weekno
+                changing_values(value, weekno)
+
+            }
+            else if (value == 'decrease-week') {
+                weekno = weekno - 1
+                week_str.innerHTML = weekno
+                changing_values(value, weekno)
+            }
+
+            else if (value == 'increase-month') {
+                monthno = monthno + 1
+                month_str.innerHTML = monthno
+                changing_values(value, monthno)
+            }
+            else if (value == 'decrease-month') {
+                monthno = monthno - 1
+                month_str.innerHTML = monthno
+                changing_values(value, monthno)
+            }
+            else if (value == 'increase-year') {
+                yearno = yearno + 1
+                year_str.innerHTML = yearno
+                changing_values(value, yearno)
+            }
+            else if (value == 'decrease-year') {
+                yearno = yearno - 1
+                year_str.innerHTML = yearno
+                changing_values(value, yearno)
+            }
+
+        })
+    })
+
+    function changing_values(value, weekno) {
+        data = { 'value': value, 'week': weekno }
+        fetch(
+            url = `/showstats/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify(data)
+        }
+        )
+            .then(res => {
+                res.json,
+                location.reload()
+            })
+            .then(res => {
+                res
+            })
+            .catch(err => console.log(err))
+
+    }
+</script>
+
+{% endblock %}

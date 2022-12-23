@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block base %}
+
+<div class="container mt-0">
+    <div>
+        <h4 class="alert alert-secondary text-center">Create Your List</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div style="margin: 0 auto; width: 63%; margin-top: 16px;">
+                            <h6 style="display: flex;">{{showdateform.date}}</h6>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div style="margin: 0 auto;width: 40%;">
+                            <h6 style="display: inline;">{{shownoteform.time}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <h6>{{shownoteform.task}}</h6>
+            </div>
+
+            <input type="submit" value="Add task" class="btn btn-primary mt-1">
+        </form>
+    </div>
+
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div style="margin: 0 auto; width: 30%; margin-top: 0px;">
+                            <h5>Your To-do List of </h5><span style="display: flex;">{{showdateform.date}}</span>
+                        </div>
+                        <span><input type="submit" value="Show Task" class="btn btn-outline-dark mt-1"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {% for x in notes %}
+        <div>
+            {% if x.isdone is False %}
+            <div class="text-center mt-2 task" style="display: flex;  background-color: rgb(205, 214, 221);">
+                <div style="flex:1" class="btn btn-outline-success btn-sm done-btn" id={{x.id}} value="done">Done
+                </div>
+                <div style="flex:12" class=" text-start ms-2">{{x.task|truncatechars:100}}</div>
+                <div style="flex:2" class="">{{x.time}}</div>
+                <div style="flex:1" class="btn btn-outline-danger btn-sm done-btn" id={{x.id}} value="remove">Remove</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% for x in notes %}
+        <div>
+            {% if x.isdone is True %}
+            <div class="text-center mt-2 task bg-task " style="display: flex; ">
+                <div style="flex:1" class="btn btn-success btn-sm">Done</div>
+                <div style="flex:12" class=" text-start ms-2">{{x.task|truncatechars:100}}</div>
+                <div style="flex:2" class="">{{x.time}}</div>
+                <div style="flex:1" class="btn btn-danger btn-sm done-btn" id={{x.id}} value="remove">Remove</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block base %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4 text-center box">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for data in form %}
+                    {{data}} 
+                {% endfor %}
+        
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+        
+                <input type="submit" value="Login" class="btn btn-primary mb-3">
+                <p>Dont't have a acccount? <a href="{% url 'signup' %}" class="btn btn-primary"> SignUp</a></p>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

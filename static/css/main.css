@@ -1,0 +1,33 @@
+.bg-new{
+    background-color: rgb(72, 71, 71);
+}
+
+.container{
+    width: 60%;
+    margin: 150px auto;
+}
+input::placeholder {             
+    text-align: center;
+}
+input{
+    margin-top: 15px;
+}
+.box{
+    background-color: rgb(165, 161, 161);
+    box-shadow: rgb(135, 136, 134) 0px 0px 15px 0px;
+    border-radius: 20px;
+}
+.task{
+    align-items: center;
+}
+.btn-sm{
+    width: 40px;
+}
+.bg-task{
+    background-color: rgb(145, 193, 230);
+
+}
+img{
+    height: 20px;
+    width: 20px;
+}
